@@ -18,18 +18,22 @@ pub mut:
 	htoolbaricondarkmode voidptr
 }
 
+pub fn set_hwnd(mut npp Npp, hwnd voidptr) {
+    npp.hwnd = hwnd
+}
+
 pub struct Npp {
 mut:
 	hwnd voidptr
 	splitter_hwnd voidptr
 }
 
-[inline]
+@[inline]
 fn (n Npp) call(msg int, wparam usize, lparam isize) isize {
 	return C.SendMessageW(n.hwnd, msg, wparam, lparam)
 }
 
-[inline]
+@[inline]
 fn alloc_wide(size int) &u8 { return vcalloc((size) * 2 ) }
 
 pub fn (mut n Npp) init() {

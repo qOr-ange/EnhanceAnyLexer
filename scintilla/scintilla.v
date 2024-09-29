@@ -61,7 +61,7 @@ pub mut:
 	error_msg_color int
 }
 
-[inline]
+@[inline]
 fn (e Editor) call(hwnd voidptr, msg int, wparam usize, lparam isize) isize{
 	match hwnd {
 		e.main_hwnd { return e.main_func(hwnd, u32(msg), wparam, lparam) }
@@ -108,7 +108,7 @@ pub fn (e Editor) clear_regex_test(hwnd voidptr, indicator_id int) {
 }
 
 fn (e Editor) set_search_target(hwnd voidptr, regex string, start_pos usize, end_pos usize) isize {
-	e.call(hwnd, sci_setsearchflags, usize(scfind_regexp | scfind_posix), 0)
+	e.call(hwnd, sci_setsearchflags, usize(scfind_regexp | scfind_posix | scfind_matchcase), 0)
 	e.call(hwnd, sci_settargetstart, start_pos, 0)
 	e.call(hwnd, sci_settargetend, end_pos, 0)
 	return e.call(hwnd, sci_searchintarget, usize(regex.len), isize(regex.str))
